@@ -2,411 +2,759 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Ethics Beyond Boundaries — Course App Suite</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Examined App — Course Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --teal:#0f766e;--teal-dark:#0d5e57;--teal-mid:#14b8a6;--teal-light:#ccfbf1;
-  --amber:#f59e0b;--amber-dark:#92400e;--amber-light:#fef3c7;
-  --navy:#1a2744;--ink:#1f2937;--muted:#6b7280;
-  --border:#e5e7eb;--paper:#f9fafb;
-  --sky:#1e3a8a;--sky-light:#dbeafe;
-  --green:#166534;--green-light:#dcfce7;
-  --red:#dc2626;--red-light:#fee2e2;
+  --teal:#0D5E57;--teal-l:#E6FAF5;--teal-m:#1a7a71;
+  --ink:#1a1612;--gray:#374151;--muted:#9CA3AF;--dim:#4B5563;
+  --amber:#92400e;--amber-l:#FEF3C7;
+  --red:#991B1B;--red-l:#FEF2F2;
+  --bg:#F8F4EE;--card:#FFFDF9;
+  --border:rgba(60,50,30,.12);
+  --serif:'Cormorant Garamond',serif;
+  --sans:'DM Sans',sans-serif;
+  --mono:'DM Mono',monospace;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Cormorant Garamond','Georgia',serif;background:linear-gradient(135deg,#0a1628 0%,#112240 50%,#0a1628 100%);min-height:100vh;color:var(--ink)}
-.wrap{max-width:1000px;margin:0 auto;padding:1rem 1rem 3rem}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);
+  min-height:100vh;line-height:1.6;}
 
-/* HEADER */
-.site-header{text-align:center;padding:2.5rem 1rem 2rem;color:white}
-.site-header .label{font-family:'JetBrains Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:rgba(20,184,166,.75);margin-bottom:.5rem}
-.site-header h1{font-size:2.2rem;font-weight:700;color:white;margin-bottom:.4rem;line-height:1.15}
-.site-header .sub{font-size:1rem;color:rgba(255,255,255,.48);font-style:italic;margin-bottom:1rem}
-.site-header .desc{max-width:640px;margin:0 auto;font-size:.9rem;color:rgba(255,255,255,.55);line-height:1.7}
+/* ── NAV ─────────────────────────────────────────── */
+.nav{background:var(--teal);color:#fff;padding:.75rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.18);}
+.nav-brand{font-family:var(--serif);font-size:1.15rem;letter-spacing:.02em;}
+.nav-tabs{display:flex;gap:.25rem;flex-wrap:wrap;}
+.ntb{background:transparent;border:none;color:rgba(255,255,255,.7);
+  font-family:var(--mono);font-size:.65rem;text-transform:uppercase;
+  letter-spacing:.08em;padding:.4rem .75rem;border-radius:.3rem;
+  cursor:pointer;transition:all .15s;}
+.ntb.active,.ntb:hover{background:rgba(255,255,255,.15);color:#fff;}
 
-/* CHAPTER GROUPS */
-.chapter-group{margin-bottom:2rem}
-.group-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(20,184,166,.65);margin-bottom:.6rem;padding-left:.1rem}
-.app-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem}
+/* ── LAYOUT ──────────────────────────────────────── */
+.wrap{max-width:900px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+.pane{display:none;}
+.pane.active{display:block;}
 
-/* APP CARDS */
-.app-card{background:white;border-radius:.75rem;overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s;box-shadow:0 2px 12px rgba(0,0,0,.15)}
-.app-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.25)}
-.app-card-head{padding:.9rem 1.1rem .7rem;display:flex;align-items:flex-start;gap:.7rem}
-.app-card-icon{font-size:1.5rem;line-height:1;flex-shrink:0;margin-top:.1rem}
-.app-card-title{font-size:1rem;font-weight:700;color:var(--navy);line-height:1.25;margin-bottom:.15rem}
-.app-card-type{font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
-.app-card-body{padding:0 1.1rem .9rem;flex:1}
-.app-card-desc{font-size:.82rem;color:var(--muted);line-height:1.6}
-.app-card-footer{padding:.55rem 1.1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.app-card-tag{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;padding:.18rem .5rem;border-radius:.25rem}
-.tag-case{background:var(--teal-light);color:var(--teal-dark)}
-.tag-companion{background:var(--sky-light);color:var(--sky)}
-.tag-simulation{background:var(--amber-light);color:var(--amber-dark)}
-.tag-reference{background:var(--paper);color:var(--muted);border:1px solid var(--border)}
-.tag-orientation{background:var(--green-light);color:var(--green)}
-.app-card-arrow{font-size:.9rem;color:var(--teal-mid)}
+/* ── HERO ────────────────────────────────────────── */
+.hero{text-align:center;padding:3rem 1rem 2.5rem;
+  background:linear-gradient(160deg,var(--teal) 0%,#1a4d46 100%);
+  color:#fff;border-radius:.65rem;margin-bottom:2rem;
+  position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(255,255,255,.06)'/%3E%3C/svg%3E");
+  opacity:.4;}
+.hero-sup{font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;
+  text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:.6rem;}
+.hero h1{font-family:var(--serif);font-size:2.8rem;font-weight:400;
+  line-height:1.15;margin-bottom:.5rem;}
+.hero p{font-size:.95rem;color:rgba(255,255,255,.75);max-width:520px;
+  margin:0 auto 1.5rem;line-height:1.7;}
+.hero-btn{display:inline-block;background:#fff;color:var(--teal);
+  font-family:var(--mono);font-size:.72rem;font-weight:500;
+  text-transform:uppercase;letter-spacing:.08em;
+  padding:.6rem 1.5rem;border-radius:.35rem;
+  border:none;cursor:pointer;transition:all .15s;text-decoration:none;}
+.hero-btn:hover{background:var(--teal-l);transform:translateY(-1px);}
 
-/* ACCENT BORDERS BY CHAPTER */
-.ch-orient .app-card-head{border-top:3px solid #0284c7}
-.ch-1 .app-card-head{border-top:3px solid #7c3aed}
-.ch-2 .app-card-head{border-top:3px solid #dc2626}
-.ch-3 .app-card-head{border-top:3px solid #0f766e}
-.ch-4 .app-card-head{border-top:3px solid #ca8a04}
-.ch-5 .app-card-head{border-top:3px solid #166534}
-.ch-6 .app-card-head{border-top:3px solid #0369a1}
-.ch-7 .app-card-head{border-top:3px solid #9333ea}
-.ch-8 .app-card-head{border-top:3px solid #92400e}
-.ch-9 .app-card-head{border-top:3px solid #0891b2}
-.ch-10 .app-card-head{border-top:3px solid #4f46e5}
-.ch-interlude .app-card-head{border-top:3px solid #0d5e57}
-.ch-rustbelt .app-card-head{border-top:3px solid #b45309}
-.ch-prologue .app-card-head{border-top:3px solid #6d28d9}
-.ch-11 .app-card-head{border-top:3px solid #0f766e}
-.ch-12 .app-card-head{border-top:3px solid #dc2626}
-.ch-13 .app-card-head{border-top:3px solid #1d4ed8}
-.ch-14 .app-card-head{border-top:3px solid #7c3aed}
-.ch-tools .app-card-head{border-top:3px solid #374151}
+/* ── CARDS ───────────────────────────────────────── */
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  margin-bottom:1.5rem;}
+.card{background:var(--card);border:1px solid var(--border);
+  border-radius:.55rem;padding:1.25rem;cursor:pointer;
+  transition:all .2s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;
+  width:4px;background:var(--teal);opacity:0;transition:opacity .2s;}
+.card:hover{box-shadow:0 4px 20px rgba(13,94,87,.12);
+  transform:translateY(-2px);}
+.card:hover::before{opacity:1;}
+.card-tag{font-family:var(--mono);font-size:.58rem;color:var(--teal);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem;}
+.card h3{font-family:var(--serif);font-size:1.15rem;font-weight:500;
+  margin-bottom:.35rem;line-height:1.3;}
+.card p{font-size:.83rem;color:var(--dim);line-height:1.6;}
+.card-arrow{position:absolute;bottom:.75rem;right:1rem;
+  color:var(--muted);font-size:.8rem;transition:transform .15s;}
+.card:hover .card-arrow{transform:translateX(3px);color:var(--teal);}
 
-/* DIVIDER */
-.divider{height:1px;background:rgba(255,255,255,.07);margin:1.5rem 0}
+/* ── SECTION HEADERS ─────────────────────────────── */
+.sec-header{margin-bottom:1.25rem;}
+.sec-label{font-family:var(--mono);font-size:.6rem;color:var(--teal);
+  text-transform:uppercase;letter-spacing:.12em;margin-bottom:.3rem;}
+.sec-title{font-family:var(--serif);font-size:1.65rem;font-weight:400;
+  color:var(--ink);line-height:1.25;}
+.sec-desc{font-size:.88rem;color:var(--dim);margin-top:.3rem;line-height:1.65;}
 
-/* PREDICTION CHAIN */
-.chain-bar{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:.65rem;padding:1rem 1.25rem;margin-bottom:1.5rem}
-.chain-bar h3{font-size:.75rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:rgba(20,184,166,.65);margin-bottom:.65rem}
-.chain-row{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
-.chain-node{font-family:'JetBrains Mono',monospace;font-size:.65rem;background:rgba(255,255,255,.07);color:rgba(255,255,255,.65);padding:.22rem .55rem;border-radius:.3rem;white-space:nowrap}
-.chain-arrow{color:rgba(20,184,166,.5);font-size:.85rem}
+/* ── BOXES ───────────────────────────────────────── */
+.info-box{background:var(--card);border:1px solid var(--border);
+  border-left:4px solid var(--teal);border-radius:.4rem;
+  padding:1rem 1.1rem;margin-bottom:1rem;line-height:1.7;font-size:.88rem;}
+.warn-box{background:var(--red-l);border:1px solid rgba(153,27,27,.2);
+  border-left:4px solid var(--red);border-radius:.4rem;
+  padding:.85rem 1rem;margin-bottom:1rem;font-size:.87rem;line-height:1.7;}
+.warn-box strong{color:var(--red);}
+.amber-box{background:var(--amber-l);border:1px solid rgba(146,64,14,.18);
+  border-left:4px solid var(--amber);border-radius:.4rem;
+  padding:.85rem 1rem;margin-bottom:1rem;font-size:.87rem;line-height:1.7;}
+
+/* ── MODE TABS ───────────────────────────────────── */
+.mode-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem;}
+.mtb{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;
+  letter-spacing:.06em;padding:.4rem .9rem;border-radius:.3rem;
+  border:1px solid var(--border);background:var(--card);
+  cursor:pointer;color:var(--dim);transition:all .15s;}
+.mtb.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+.mode-panel{display:none;}
+.mode-panel.active{display:block;}
+.mode-content{background:var(--card);border:1px solid var(--border);
+  border-radius:.5rem;padding:1.25rem 1.35rem;}
+.mode-content h4{font-family:var(--serif);font-size:1.2rem;font-weight:500;
+  color:var(--teal);margin-bottom:.4rem;}
+.mode-content p{font-size:.88rem;line-height:1.72;color:var(--gray);
+  margin-bottom:.6rem;}
+.mode-content p:last-child{margin-bottom:0;}
+.example-list{list-style:none;margin:.6rem 0 .9rem;padding:0;}
+.example-list li{font-size:.86rem;color:var(--dim);line-height:1.6;
+  padding:.35rem 0 .35rem 1.2rem;position:relative;
+  border-bottom:1px solid var(--border);}
+.example-list li:last-child{border-bottom:none;}
+.example-list li::before{content:'\2192';position:absolute;left:0;
+  color:var(--teal);font-size:.8rem;}
+.try-it{font-family:var(--mono);font-size:.62rem;color:var(--teal);
+  text-transform:uppercase;letter-spacing:.08em;margin-top:.75rem;
+  display:block;}
+
+/* ── ASSIGNMENT CARDS ────────────────────────────── */
+.assign-card{background:var(--card);border:1px solid var(--border);
+  border-radius:.5rem;margin-bottom:.85rem;overflow:hidden;}
+.assign-header{display:flex;align-items:center;gap:1rem;padding:.85rem 1.1rem;
+  cursor:pointer;transition:background .15s;}
+.assign-header:hover{background:rgba(13,94,87,.04);}
+.assign-num{width:2rem;height:2rem;border-radius:50%;
+  background:var(--teal);color:#fff;font-family:var(--mono);
+  font-size:.72rem;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;}
+.assign-title{font-family:var(--serif);font-size:1rem;font-weight:500;flex:1;}
+.assign-meta{font-family:var(--mono);font-size:.6rem;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em;}
+.assign-body{display:none;padding:0 1.1rem 1.1rem 3.9rem;border-top:1px solid var(--border);}
+.assign-body.open{display:block;}
+.assign-body p{font-size:.86rem;line-height:1.72;color:var(--gray);margin:.6rem 0;}
+.assign-prompt{background:var(--teal-l);border-radius:.35rem;
+  padding:.75rem .9rem;margin:.7rem 0;font-size:.84rem;
+  line-height:1.65;color:var(--ink);}
+.assign-prompt strong{color:var(--teal);}
+.assign-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.6rem;}
+.tag{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;
+  letter-spacing:.06em;padding:.25rem .6rem;border-radius:.25rem;
+  background:var(--teal-l);color:var(--teal);}
+
+/* ── PRIVACY ─────────────────────────────────────── */
+.privacy-grid{display:grid;gap:.75rem;grid-template-columns:1fr 1fr;
+  margin-bottom:1rem;}
+@media(max-width:540px){.privacy-grid{grid-template-columns:1fr;}}
+.priv-card{background:var(--card);border:1px solid var(--border);
+  border-radius:.45rem;padding:1rem;}
+.priv-card h4{font-family:var(--mono);font-size:.62rem;color:var(--teal);
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:.45rem;}
+.priv-card ul{list-style:none;padding:0;}
+.priv-card ul li{font-size:.84rem;color:var(--gray);line-height:1.65;
+  padding:.25rem 0 .25rem 1rem;position:relative;}
+.priv-card ul li::before{content:'\2713';position:absolute;left:0;
+  color:var(--teal);font-size:.75rem;}
+.priv-card.no ul li::before{content:'\00d7';color:var(--red);}
+
+/* ── CONSENT ─────────────────────────────────────── */
+.consent-box{background:var(--card);border:2px solid var(--teal);
+  border-radius:.55rem;padding:1.5rem;margin-top:1.25rem;}
+.consent-box h3{font-family:var(--serif);font-size:1.3rem;color:var(--teal);
+  margin-bottom:.75rem;}
+.consent-items{list-style:none;padding:0;margin-bottom:1rem;}
+.consent-items li{font-size:.86rem;line-height:1.7;color:var(--gray);
+  padding:.3rem 0 .3rem 1.25rem;position:relative;
+  border-bottom:1px solid var(--border);}
+.consent-items li:last-child{border-bottom:none;}
+.consent-items li::before{content:'\2714';position:absolute;left:0;
+  color:var(--teal);}
+.sig-grid{display:grid;grid-template-columns:2fr 2fr 1fr;gap:1rem;
+  margin-top:1.25rem;}
+@media(max-width:480px){.sig-grid{grid-template-columns:1fr;}}
+.sig-field label{font-family:var(--mono);font-size:.6rem;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:.25rem;}
+.sig-field input{width:100%;padding:.5rem .6rem;
+  border:none;border-bottom:2px solid var(--gray);
+  background:transparent;font-family:var(--serif);font-size:1rem;
+  color:var(--ink);outline:none;transition:border-color .15s;}
+.sig-field input:focus{border-color:var(--teal);}
+
+/* ── QUICK TIPS ──────────────────────────────────── */
+.tips-grid{display:grid;gap:.75rem;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+.tip-card{background:var(--card);border:1px solid var(--border);
+  border-radius:.45rem;padding:.9rem 1rem;}
+.tip-card .tip-icon{font-size:1.3rem;margin-bottom:.4rem;}
+.tip-card h4{font-family:var(--sans);font-size:.88rem;font-weight:500;
+  margin-bottom:.3rem;}
+.tip-card p{font-size:.8rem;color:var(--dim);line-height:1.6;}
+
+/* ── FOOTER ──────────────────────────────────────── */
+.app-footer{text-align:center;font-family:var(--mono);font-size:.65rem;
+  color:var(--muted);padding:1.5rem 0 .5rem;letter-spacing:.04em;}
 </style>
 </head>
 <body>
+
+<div class="nav">
+  <div class="nav-brand">The Examined &#8212; Course Guide</div>
+  <div class="nav-tabs">
+    <button class="ntb active" onclick="show('overview')">Overview</button>
+    <button class="ntb" onclick="show('modes')">Companion Modes</button>
+    <button class="ntb" onclick="show('assignments')">Assignments</button>
+    <button class="ntb" onclick="show('privacy')">Privacy</button>
+    <button class="ntb" onclick="show('quickstart')">Quick Start</button>
+  </div>
+</div>
+
 <div class="wrap">
 
-<div class="site-header">
-  <div class="label">Saint Petersburg College &middot; Ethics Institute</div>
-  <h1>Ethics Beyond Boundaries</h1>
-  <div class="sub">Interactive App Suite &middot; Dr. Robert Mertzman</div>
-  <div class="desc">A complete set of simulation apps, case explorers, and companion reading tools for the EBB course. Each app connects to the UCP simulation engine and stores journal predictions for the next chapter.</div>
-</div>
+<!-- ═══════════════════════════════════════════════ OVERVIEW -->
+<div class="pane active" id="pane-overview">
+  <div class="hero">
+    <div class="hero-sup">Ethics Beyond Boundaries &middot; Saint Petersburg College</div>
+    <h1>The Examined App</h1>
+    <p>A personal philosophy laboratory for identity, ethical reasoning, and self-understanding. Not a journaling tool. Not a chatbot. A structured sandbox for working with your own life as a model.</p>
+    <a href="https://rmertzman-tech.github.io/The-Examined/" target="_blank" class="hero-btn">Open The Examined &rarr;</a>
+  </div>
 
-<!-- PREDICTION CHAIN -->
-<div class="chain-bar">
-  <h3>Prediction Chain &mdash; Journal Q5 flows chapter to chapter</h3>
-  <div class="chain-row">
-    <span class="chain-node">Orientation → orient_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch2 → ch2_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch3 → ch3_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch4 → ch4_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch5 → ch5_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch6 → ch6_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch7 → ch7_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Ch8 → ch8_cq5</span>
-    <span class="chain-arrow">→</span>
-    <span class="chain-node">Rust Belt → rust_belt_cq5</span>
+  <div class="sec-header">
+    <div class="sec-label">What this tool becomes</div>
+    <div class="sec-title">More than reflection</div>
+    <div class="sec-desc">The Examined transforms familiar tools into something structurally different. Here is what each feature actually does.</div>
+  </div>
+
+  <div class="grid">
+    <div class="card" onclick="show('modes')">
+      <div class="card-tag">Core experience</div>
+      <h3>Your Digital Twin</h3>
+      <p>A living model of you as a moral agent. Built from your values, history, and patterns of attention. Becomes more precise as you use the Companion.</p>
+      <div class="card-arrow">&rarr;</div>
+    </div>
+    <div class="card" onclick="show('modes')">
+      <div class="card-tag">Conversation</div>
+      <h3>The Companion</h3>
+      <p>Engages from within your specific framework &mdash; not generic advice. Four modes for different kinds of inquiry: Explore, Experiment, Reflect, Recover.</p>
+      <div class="card-arrow">&rarr;</div>
+    </div>
+    <div class="card">
+      <div class="card-tag">Longitudinal</div>
+      <h3>Coherence Check-In</h3>
+      <p>Six domains: energy, time horizon, relationships, clarity, identity, recovery access. A single reading tells you little. A pattern over weeks tells you a great deal.</p>
+    </div>
+    <div class="card">
+      <div class="card-tag">Record</div>
+      <h3>The Archive</h3>
+      <p>Everything you choose to save becomes a longitudinal record of your examination. The profile revision at 90 days uses everything you&rsquo;ve archived as additional context.</p>
+    </div>
+    <div class="card" onclick="show('assignments')">
+      <div class="card-tag">Development</div>
+      <h3>Letter to Future Self</h3>
+      <p>Written in week 2, read in week 14. The contrast between who you were and who you have become is what the examined life actually looks like when it works.</p>
+      <div class="card-arrow">&rarr;</div>
+    </div>
+    <div class="card" onclick="show('quickstart')">
+      <div class="card-tag">When overwhelmed</div>
+      <h3>Recovery Mode</h3>
+      <p>When examination costs more than it gives. Identifies the kind of burden you are carrying and offers specific next steps at whatever depth feels possible.</p>
+      <div class="card-arrow">&rarr;</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong style="font-family:var(--mono);font-size:.65rem;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:.35rem">The most important thing to understand</strong>
+    You are not using this app to get answers. You are using it to explore how you think, what shapes your thinking, and how you might grow. The Companion is built to reflect your reasoning back to you with structural precision &mdash; not to tell you what to believe.
+  </div>
+
+  <div class="sec-header" style="margin-top:1.75rem">
+    <div class="sec-label">The transformation</div>
+    <div class="sec-title">What this becomes in use</div>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:.5rem;overflow:hidden;margin-bottom:1.5rem;">
+    <table style="width:100%;border-collapse:collapse;font-size:.85rem;">
+      <tr style="background:var(--teal);color:#fff;">
+        <th style="padding:.65rem 1rem;text-align:left;font-family:var(--mono);font-size:.62rem;font-weight:400;text-transform:uppercase;letter-spacing:.08em;">Ordinary tool</th>
+        <th style="padding:.65rem 1rem;text-align:left;font-family:var(--mono);font-size:.62rem;font-weight:400;text-transform:uppercase;letter-spacing:.08em;">What it becomes</th>
+      </tr>
+      <tr><td style="padding:.6rem 1rem;border-bottom:1px solid var(--border);">Journal</td><td style="padding:.6rem 1rem;border-bottom:1px solid var(--border);color:var(--teal);font-weight:500;">Identity laboratory</td></tr>
+      <tr style="background:#f9f7f3;"><td style="padding:.6rem 1rem;border-bottom:1px solid var(--border);">Generic chatbot</td><td style="padding:.6rem 1rem;border-bottom:1px solid var(--border);color:var(--teal);font-weight:500;">Personalized reasoning partner built from your specific moral framework</td></tr>
+      <tr><td style="padding:.6rem 1rem;border-bottom:1px solid var(--border);">Self-help tool</td><td style="padding:.6rem 1rem;border-bottom:1px solid var(--border);color:var(--teal);font-weight:500;">Structural self-modeling</td></tr>
+      <tr style="background:#f9f7f3;"><td style="padding:.6rem 1rem;border-bottom:1px solid var(--border);">Planning</td><td style="padding:.6rem 1rem;border-bottom:1px solid var(--border);color:var(--teal);font-weight:500;">Ethical life design with explicit values and trade-offs</td></tr>
+      <tr><td style="padding:.6rem 1rem;">Reflection</td><td style="padding:.6rem 1rem;color:var(--teal);font-weight:500;">Interactive philosophical simulation</td></tr>
+    </table>
   </div>
 </div>
 
-<!-- ORIENTATION -->
-<div class="chapter-group ch-orient">
-  <div class="group-label">Orientation</div>
-  <div class="app-grid">
-    <a class="app-card" href="ebb-orientation-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🗺️</div><div><div class="app-card-title">Course Orientation</div><div class="app-card-type">Interactive Map</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The watershed model, PRF Peak Calculator, course arc, and Journal Q4 prediction for Chapter 2. Start here before Chapter 1.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-orientation">Orientation</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="day1-orientation.html">
-      <div class="app-card-head"><div class="app-card-icon">📋</div><div><div class="app-card-title">Day 1 Orientation</div><div class="app-card-type">First Class</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">First-day introduction to the course framework, PRF concept, and OS1/OS2 distinction.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-orientation">Day 1</span><span class="app-card-arrow">→</span></div>
-    </a>
+<!-- ═══════════════════════════════════════════════ MODES -->
+<div class="pane" id="pane-modes">
+  <div class="sec-header">
+    <div class="sec-label">The Companion</div>
+    <div class="sec-title">Four ways to explore your Twin</div>
+    <div class="sec-desc">Each mode is suited to a different kind of inquiry. Select a mode to see example questions and how to use it.</div>
+  </div>
+
+  <div class="mode-tabs">
+    <button class="mtb active" onclick="setMode('explore',this)">Explore</button>
+    <button class="mtb" onclick="setMode('experiment',this)">Experiment</button>
+    <button class="mtb" onclick="setMode('reflect',this)">Reflect</button>
+    <button class="mtb" onclick="setMode('recover',this)">Recover</button>
+  </div>
+
+  <div class="mode-panel active" id="mode-explore">
+    <div class="mode-content">
+      <div class="card-tag">Forward mode</div>
+      <h4>&#8594; Explore &mdash; &ldquo;What kind of life fits who I am?&rdquo;</h4>
+      <p>Use Explore when you want to think about your future, your direction, your goals, or the environments where you would thrive. This is the <em>Vacation Planner</em>: instead of asking &ldquo;where should I go?&rdquo; it asks &ldquo;given who I actually am, where would I flourish?&rdquo;</p>
+      <p>Explore is teleological &mdash; it connects your values to the shape of a life worth living for you specifically. It is not about predicting the future. It is about designing it intentionally.</p>
+      <span class="try-it">Example questions to bring to Explore mode</span>
+      <ul class="example-list">
+        <li>&ldquo;Given who I am, what kind of career would feel meaningful rather than just successful?&rdquo;</li>
+        <li>&ldquo;What environment &mdash; city, community, kind of organization &mdash; fits my moral structure?&rdquo;</li>
+        <li>&ldquo;If I had one year to reinvent my direction, what would be worth pursuing?&rdquo;</li>
+        <li>&ldquo;What trade-offs am I willing to accept to live according to my values?&rdquo;</li>
+        <li>&ldquo;What kind of relationships, practices, and work are aligned with who I actually am?&rdquo;</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mode-panel" id="mode-experiment">
+    <div class="mode-content">
+      <div class="card-tag">Counterfactual mode</div>
+      <h4>&#128300; Experiment &mdash; &ldquo;What if things had been different?&rdquo;</h4>
+      <p>Experiment mode is where the app becomes genuinely playful and profound. It treats your identity as path-dependent and asks: which parts of you are essential, and which are contingent on the specific circumstances of your actual history?</p>
+      <p>This is identity simulation, ethical counterfactuals, and narrative rewriting &mdash; philosophy meets alternate timelines. The insight it produces is usually about what remains constant across the alternate versions, not about the differences.</p>
+      <span class="try-it">Example questions to bring to Experiment mode</span>
+      <ul class="example-list">
+        <li>&ldquo;If I had pursued a different field, what kind of person would I be now?&rdquo;</li>
+        <li>&ldquo;What if I had grown up in a different culture &mdash; how would my values differ?&rdquo;</li>
+        <li>&ldquo;If I removed fear of failure from my decision-making, what would I have done differently?&rdquo;</li>
+        <li>&ldquo;What choice from my past most shaped who I am now &mdash; and what did it cost?&rdquo;</li>
+        <li>&ldquo;What remains constant about me across all these alternate timelines?&rdquo;</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mode-panel" id="mode-reflect">
+    <div class="mode-content">
+      <div class="card-tag">Present mode</div>
+      <h4>&#128172; Reflect &mdash; &ldquo;Help me think through something real.&rdquo;</h4>
+      <p>Reflect is the best starting point for most students, and the mode most directly connected to SAGE reasoning. Bring something real from your life right now: a decision you are navigating, a tension you are living with, a conflict, a reaction that surprised you.</p>
+      <p>The key difference from talking to a friend or a generic AI: the Companion engages from within your specific moral framework. You feel &ldquo;seen structurally&rdquo; &mdash; your reasoning is reflected back to you with precision, not generic wisdom.</p>
+      <span class="try-it">Example questions to bring to Reflect mode</span>
+      <ul class="example-list">
+        <li>&ldquo;I have two options and I don&rsquo;t know which one to choose &mdash; help me think this through.&rdquo;</li>
+        <li>&ldquo;Why did I react so strongly to this situation? What does that reveal?&rdquo;</li>
+        <li>&ldquo;What values are actually in conflict here, and how do I weigh them?&rdquo;</li>
+        <li>&ldquo;I feel like I&rsquo;m being asked to compromise something important &mdash; what is it?&rdquo;</li>
+        <li>&ldquo;What would I advise a friend in my situation &mdash; and why can&rsquo;t I take my own advice?&rdquo;</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mode-panel" id="mode-recover">
+    <div class="mode-content">
+      <div class="card-tag">Restoration mode</div>
+      <h4>&#9749; Recover &mdash; &ldquo;I&rsquo;m not ready to think deeply yet.&rdquo;</h4>
+      <p>Recovery Mode is one of the most human-centered parts of the app. Instead of forcing reflection when you are depleted, it begins from a different premise: sometimes the most philosophical act is not analysis, but restoration.</p>
+      <p>Recovery Mode identifies what kind of burden you are carrying (body, time, relationship, structure, or identity) and offers specific, low-cost actions at whatever depth feels possible &mdash; from a one-minute reset to a full reflective conversation.</p>
+      <div class="warn-box">
+        <strong>Important:</strong> Low coherence is not failure. It is information about what you need. If you feel overwhelmed, exhausted, or like everything is too much &mdash; Recovery Mode first, then return to examination when you have capacity.
+      </div>
+      <span class="try-it">What to bring to Recovery Mode</span>
+      <ul class="example-list">
+        <li>&ldquo;I&rsquo;m overwhelmed and I don&rsquo;t know where to start.&rdquo;</li>
+        <li>&ldquo;Everything feels urgent and nothing is getting done.&rdquo;</li>
+        <li>&ldquo;I don&rsquo;t feel like myself right now and I&rsquo;m not sure why.&rdquo;</li>
+        <li>&ldquo;I need to slow down before I can think clearly.&rdquo;</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem">
+    <div class="sec-label">The Coherence Check-In</div>
+    <div class="info-box" style="margin-top:.5rem">
+      <strong>Six domains, one slider each, thirty seconds.</strong> Physical energy &middot; Temporal horizon &middot; Relational coherence &middot; Structural clarity &middot; Identity integrity &middot; Recovery access.<br><br>
+      Don&rsquo;t focus on any single reading. Instead ask: what patterns do I see over time? When do I feel most clear? What situations consistently drain me? The trajectory is the data.
+    </div>
   </div>
 </div>
 
-<!-- CHAPTER 1 -->
-<div class="chapter-group ch-1">
-  <div class="group-label">Chapter 1 &mdash; The PRF</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter1-lens-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🔭</div><div><div class="app-card-title">Your Interpretive Lens</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Build your Phenomenological Reference Framework. How your PRF formed, what it makes visible, and what it makes hard to see.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
+<!-- ═══════════════════════════════════════════════ ASSIGNMENTS -->
+<div class="pane" id="pane-assignments">
+  <div class="sec-header">
+    <div class="sec-label">Course sequence</div>
+    <div class="sec-title">Seven assignments + final project</div>
+    <div class="sec-desc">The assignments follow the formal trajectory of identity development: build the model, apply it, test it against counterfactuals, expand its moral horizon, examine the conditions that make ethical judgment possible. Click any assignment to expand it.</div>
+  </div>
+
+  <div class="info-box" style="margin-bottom:1.25rem">
+    <strong>All graded work is based on reflection, not disclosure.</strong> You are never required to share personal or sensitive experiences. The journals ask what you noticed, what surprised you, what questions the app opened &mdash; not the specific content of your conversations.
+  </div>
+
+  <!-- A1 -->
+  <div class="assign-card">
+    <div class="assign-header" onclick="toggleAssign(this)">
+      <div class="assign-num">1</div>
+      <div class="assign-title">Mapping My Moral Architecture</div>
+      <div class="assign-meta">Weeks 1&ndash;2 &middot; 600&ndash;800 words</div>
+    </div>
+    <div class="assign-body">
+      <p>Complete the PRF22 and at least four Assembly History responses. Read your generated profile slowly.</p>
+      <div class="assign-prompt">
+        <strong>Journal prompt:</strong> Where does your profile feel precisely right &mdash; and where does it feel slightly off or missing? Identify one value that strongly defines you, one tension or contradiction in your profile, and one life experience that shaped your moral perspective. Then: how does your moral &ldquo;architecture&rdquo; influence how you see ethical problems?
+      </div>
+      <p><strong>Learning goal:</strong> Students begin to understand they are not neutral observers &mdash; ethical reasoning is structured by identity and history.</p>
+      <p><strong>Also in week 2:</strong> Write your Letter to Future Self. You will not read it until week 14.</p>
+      <div class="assign-tags"><span class="tag">Profile</span><span class="tag">PRF22</span><span class="tag">Assembly History</span></div>
+    </div>
+  </div>
+
+  <!-- A2 -->
+  <div class="assign-card">
+    <div class="assign-header" onclick="toggleAssign(this)">
+      <div class="assign-num">2</div>
+      <div class="assign-title">The Living Ethical Problem</div>
+      <div class="assign-meta">Weeks 3&ndash;4 &middot; 600&ndash;800 words</div>
+    </div>
+    <div class="assign-body">
+      <p>Open Companion &rarr; Reflect mode. Bring a real issue: a personal dilemma, a conflict, a difficult decision. Have at least 6&ndash;8 message exchanges. Save the exchange to Archive.</p>
+      <div class="assign-prompt">
+        <strong>Journal prompt (SAGE):</strong><br>
+        <strong>S &mdash; Seeing:</strong> What is actually happening?<br>
+        <strong>A &mdash; Analyzing:</strong> Who are the stakeholders? What values are in tension?<br>
+        <strong>G &mdash; Generating:</strong> What possible responses exist?<br>
+        <strong>E &mdash; Engaging:</strong> What would you actually do &mdash; and why?<br><br>
+        Required: How did the Companion help you see something you had not previously noticed?
+      </div>
+      <p><strong>Stuck after a few exchanges?</strong> Tell the Companion: &ldquo;I feel like we&rsquo;ve covered this &mdash; what am I not seeing yet?&rdquo; That question almost always opens a new direction.</p>
+      <div class="assign-tags"><span class="tag">Reflect mode</span><span class="tag">SAGE</span><span class="tag">Archive</span></div>
+    </div>
+  </div>
+
+  <!-- A3 -->
+  <div class="assign-card">
+    <div class="assign-header" onclick="toggleAssign(this)">
+      <div class="assign-num">3</div>
+      <div class="assign-title">Counterfactual Self</div>
+      <div class="assign-meta">Weeks 5&ndash;6 &middot; 600&ndash;800 words</div>
+    </div>
+    <div class="assign-body">
+      <p>Open Companion &rarr; Experiment mode. Explore one alternate version of yourself: a different major, a different culture, a self without fear of failure.</p>
+      <div class="assign-prompt">
+        <strong>Journal prompt:</strong> Describe the alternate version of yourself. How would this version make different ethical decisions? What values would change? What remains constant? Final question: what does this reveal about which parts of your identity are essential versus contingent?
+      </div>
+      <p><strong>Learning goal:</strong> Identity is constructed. Ethics is path-dependent. Self-understanding enables flexibility.</p>
+      <div class="assign-tags"><span class="tag">Experiment mode</span><span class="tag">Identity</span><span class="tag">Counterfactuals</span></div>
+    </div>
+  </div>
+
+  <!-- A4 -->
+  <div class="assign-card">
+    <div class="assign-header" onclick="toggleAssign(this)">
+      <div class="assign-num">4</div>
+      <div class="assign-title">Designing My Future</div>
+      <div class="assign-meta">Weeks 7&ndash;8 &middot; 600&ndash;800 words</div>
+    </div>
+    <div class="assign-body">
+      <p>Open Companion &rarr; Explore mode. Ask: &ldquo;Where would I flourish given who I am?&rdquo; and &ldquo;What kind of life fits my moral structure?&rdquo; Explore career paths, environments, and lifestyles.</p>
+      <div class="assign-prompt">
+        <strong>Journal prompt:</strong> Describe a life that is ethically aligned with who you are. Include: environment, relationships, work, practices. Key question: what trade-offs must you accept to live this life?
+      </div>
+      <p><strong>Learning goal:</strong> Connect ethics to life design. Understand constraints and trade-offs. Think teleologically &mdash; ends and means together.</p>
+      <div class="assign-tags"><span class="tag">Explore mode</span><span class="tag">Life design</span><span class="tag">Teleological ethics</span></div>
+    </div>
+  </div>
+
+  <!-- A5 -->
+  <div class="assign-card">
+    <div class="assign-header" onclick="toggleAssign(this)">
+      <div class="assign-num">5</div>
+      <div class="assign-title">Coherence and Breakdown</div>
+      <div class="assign-meta">Weeks 9&ndash;10 &middot; 400&ndash;600 words</div>
+    </div>
+    <div class="assign-body">
+      <p>Complete 3&ndash;5 Coherence Check-ins over a week. Observe patterns across domains.</p>
+      <div class="assign-prompt">
+        <strong>Journal prompt:</strong> What patterns do you notice in your coherence across time? What increases coherence? What decreases it? Which domain is most fragile? Core reflection: how does your ability to make good ethical decisions change when your coherence is low?
+      </div>
+      <p><strong>Learning goal:</strong> Ethics depends on conditions of agency, not just on reasoning. This is the course&rsquo;s central empirical claim.</p>
+      <div class="assign-tags"><span class="tag">Coherence check-in</span><span class="tag">ATCF</span><span class="tag">Agency conditions</span></div>
+    </div>
+  </div>
+
+  <!-- A6 -->
+  <div class="assign-card">
+    <div class="assign-header" onclick="toggleAssign(this)">
+      <div class="assign-num">6</div>
+      <div class="assign-title">Recovery Before Judgment</div>
+      <div class="assign-meta">Weeks 10&ndash;11 &middot; 400&ndash;600 words</div>
+    </div>
+    <div class="assign-body">
+      <p>Use Recovery Mode at least once. Identify your burden type, choose recovery actions, save the Recovery Note.</p>
+      <div class="assign-prompt">
+        <strong>Journal prompt:</strong> Describe a moment when you were not capable of clear ethical thinking. What was your burden? What did recovery require? How did your thinking change afterward? Critical question: should ethical responsibility account for a person&rsquo;s level of coherence?
+      </div>
+      <p><strong>Learning goal:</strong> Ethical judgment must consider human limits. Repair requires recovery before it can succeed.</p>
+      <div class="assign-tags"><span class="tag">Recovery mode</span><span class="tag">Care ethics</span><span class="tag">Moral injury</span></div>
+    </div>
+  </div>
+
+  <!-- A7 -->
+  <div class="assign-card">
+    <div class="assign-header" onclick="toggleAssign(this)">
+      <div class="assign-num">7</div>
+      <div class="assign-title">The Archive as Identity</div>
+      <div class="assign-meta">Weeks 12&ndash;13 &middot; 600&ndash;800 words</div>
+    </div>
+    <div class="assign-body">
+      <p>Review your saved conversations, reflections, and recovery notes. Identify patterns across the whole semester.</p>
+      <div class="assign-prompt">
+        <strong>Journal prompt:</strong> What story is your archive telling about you? Include: recurring concerns, growth points, unresolved tensions. Final question: who are you becoming?
+      </div>
+      <p><strong>Learning goal:</strong> See identity as dynamic. Recognize ethical development over time as a process, not an event.</p>
+      <div class="assign-tags"><span class="tag">Archive</span><span class="tag">Narrative ethics</span><span class="tag">Longitudinal identity</span></div>
+    </div>
+  </div>
+
+  <!-- Final -->
+  <div class="assign-card" style="border:2px solid var(--teal);">
+    <div class="assign-header" onclick="toggleAssign(this)" style="background:var(--teal-l);">
+      <div class="assign-num" style="background:var(--amber);">&#8734;</div>
+      <div class="assign-title" style="color:var(--teal);">Final Project &mdash; My Personal Ethical Framework</div>
+      <div class="assign-meta">Weeks 14&ndash;15 &middot; 1200&ndash;1500 words</div>
+    </div>
+    <div class="assign-body">
+      <p>Use your archive as your evidence base. This is not a conventional essay summarizing course concepts. It is an argument about your own development as an ethical agent, supported by what you have actually recorded across the semester.</p>
+      <div class="assign-prompt">
+        <strong>Final question:</strong> How will you continue living an examined life beyond this course?<br><br>
+        Include: your PRF and how it shaped your reasoning this semester &middot; one application of SAGE to a significant issue &middot; a reflection on coherence and the conditions for your best ethical thinking &middot; who you are becoming and what you intend to do about it.
+      </div>
+      <p><strong>Read your Letter to Future Self (written in week 2) before writing this project.</strong></p>
+      <div class="assign-tags"><span class="tag">All modes</span><span class="tag">Archive</span><span class="tag">PRF</span><span class="tag">SAGE</span><span class="tag">Letter to self</span></div>
+    </div>
   </div>
 </div>
 
-<!-- CHAPTER 2 -->
-<div class="chapter-group ch-2">
-  <div class="group-label">Chapter 2 &mdash; The Challenger Disaster</div>
-  <div class="app-grid">
-    <a class="app-card" href="challenger-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🚀</div><div><div class="app-card-title">Challenger Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Roger Boisjoly and the suppression gap. Eight tabs: Discovery through Aftermath. UCP Simulation: Config A (Thiokol) vs. Config B (protected channel). Clickable metric explanations.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter2-telescope-app.html">
-      <div class="app-card-head"><div class="app-card-icon">📡</div><div><div class="app-card-title">Chapter 2 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The suppression gap concept, institutional architecture, and the ethics of speaking truth to power.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
+<!-- ═══════════════════════════════════════════════ PRIVACY -->
+<div class="pane" id="pane-privacy">
+  <div class="sec-header">
+    <div class="sec-label">Data and disclosure</div>
+    <div class="sec-title">Privacy guidelines for this course</div>
+    <div class="sec-desc">Your data belongs to you. This page explains exactly what the app stores, what is transmitted, and what you are and are not required to share.</div>
+  </div>
+
+  <div class="privacy-grid">
+    <div class="priv-card">
+      <h4>What stays in your browser</h4>
+      <ul>
+        <li>Your philosophical profile</li>
+        <li>All six assembly history essays</li>
+        <li>Your complete Companion archive</li>
+        <li>All coherence check-in readings</li>
+        <li>Recovery notes and history</li>
+      </ul>
+    </div>
+    <div class="priv-card">
+      <h4>What is transmitted when you use the Companion</h4>
+      <ul>
+        <li>Each message &mdash; encrypted via HTTPS/TLS</li>
+        <li>A summary of your profile context</li>
+        <li>Processed by Anthropic&rsquo;s Claude API</li>
+        <li>Anthropic does not train on API data</li>
+        <li>Subject to Anthropic&rsquo;s privacy policy</li>
+      </ul>
+    </div>
+    <div class="priv-card no">
+      <h4>You are NOT required to</h4>
+      <ul>
+        <li>Share personal or sensitive experiences</li>
+        <li>Reveal private information</li>
+        <li>Submit raw app data as graded work</li>
+        <li>Use your full name within the app</li>
+      </ul>
+    </div>
+    <div class="priv-card no">
+      <h4>You should NOT</h4>
+      <ul>
+        <li>Upload Twin backup files to Canvas</li>
+        <li>Share another student&rsquo;s information</li>
+        <li>Access someone else&rsquo;s data</li>
+        <li>Store exported files carelessly</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <strong>If you are in crisis:</strong> The Examined is not a mental health service. If you are experiencing thoughts of harming yourself or others, or feel unable to care for yourself, please call or text <strong>988</strong> (Suicide &amp; Crisis Lifeline, 24/7) or contact a mental health professional. Do not continue with the app right now.
+  </div>
+
+  <div class="amber-box">
+    <strong>Always use the app from the course URL</strong> &mdash; not from a downloaded file. Your data is stored in the browser at the origin where you first used the app. Opening a different file or a different browser means a different storage location. Bookmark: <strong>rmertzman-tech.github.io/The-Examined/</strong>
+  </div>
+
+  <!-- CONSENT FORM -->
+  <div class="consent-box">
+    <h3>Student Agreement &mdash; The Examined App</h3>
+    <div style="font-family:var(--mono);font-size:.62rem;color:var(--muted);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.06em">Ethics Beyond Boundaries &middot; Saint Petersburg College &middot; 2026</div>
+    <p style="font-size:.87rem;line-height:1.7;color:var(--gray);margin-bottom:.75rem">I have read and understood the course chapter on The Examined App. I understand that:</p>
+    <ul class="consent-items">
+      <li>The Examined generates highly personal reflective data that I am responsible for protecting</li>
+      <li>My data is stored in my browser and is not accessible to the instructor or the institution unless I explicitly share it</li>
+      <li>When I use the Companion, my messages are transmitted via encrypted connection to Anthropic&rsquo;s API, which processes them to generate responses. Anthropic does not train its models on API data.</li>
+      <li>I am not required to disclose sensitive personal information as part of graded work</li>
+      <li>I should not upload backup files to Canvas or share another student&rsquo;s data</li>
+      <li>The app is not a mental health service, and 988 is available if I need crisis support</li>
+      <li>I agree to use The Examined respectfully, honestly, and within the guidelines provided</li>
+    </ul>
+    <div class="sig-grid">
+      <div class="sig-field">
+        <label>Student name (print)</label>
+        <input type="text" placeholder=" ">
+      </div>
+      <div class="sig-field">
+        <label>Signature</label>
+        <input type="text" placeholder=" ">
+      </div>
+      <div class="sig-field">
+        <label>Date</label>
+        <input type="text" placeholder=" ">
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- CHAPTER 3 -->
-<div class="chapter-group ch-3">
-  <div class="group-label">Chapter 3 &mdash; Father Hanna</div>
-  <div class="app-grid">
-    <a class="app-card" href="hanna-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">⛪</div><div><div class="app-card-title">Hanna Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Father Saad Sirop Hanna — maintaining identity under maximum institutional entropy. Identity Kernel, BioBond, and the limits of individual courage.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter3-commonwealth-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🏛️</div><div><div class="app-card-title">Chapter 3 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Building commonwealth across difference. The conditions for ethical functioning under extreme constraint.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
+<!-- ═══════════════════════════════════════════════ QUICK START -->
+<div class="pane" id="pane-quickstart">
+  <div class="sec-header">
+    <div class="sec-label">Getting started</div>
+    <div class="sec-title">Your first session in five steps</div>
+    <div class="sec-desc">Complete these steps in your first class session. They take about fifteen to twenty minutes.</div>
+  </div>
+
+  <div style="counter-reset:step;margin-bottom:1.5rem;">
+    <div class="card" style="cursor:default;margin-bottom:.75rem;padding:1.1rem 1.25rem;display:flex;gap:1rem;align-items:flex-start;">
+      <div style="width:2rem;height:2rem;border-radius:50%;background:var(--teal);color:#fff;font-family:var(--mono);font-size:.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+      <div>
+        <div class="card-tag" style="margin-bottom:.25rem">Open the app</div>
+        <div style="font-weight:500;margin-bottom:.3rem;">Go to the course URL</div>
+        <div style="font-size:.84rem;color:var(--dim);line-height:1.6;">Open <strong>rmertzman-tech.github.io/The-Examined/</strong> in your browser. Bookmark it. Always use this URL &mdash; not a downloaded file. Read the first-visit disclosure and click &ldquo;I understand &mdash; begin.&rdquo;</div>
+      </div>
+    </div>
+    <div class="card" style="cursor:default;margin-bottom:.75rem;padding:1.1rem 1.25rem;display:flex;gap:1rem;align-items:flex-start;">
+      <div style="width:2rem;height:2rem;border-radius:50%;background:var(--teal);color:#fff;font-family:var(--mono);font-size:.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+      <div>
+        <div class="card-tag" style="margin-bottom:.25rem">PRF22 assessment</div>
+        <div style="font-weight:500;margin-bottom:.3rem;">Twenty-two scenario questions &mdash; take your time</div>
+        <div style="font-size:.84rem;color:var(--dim);line-height:1.6;">There are no right answers. These questions map the structure of your moral attention &mdash; what you notice first, what you weight most heavily. Answer from instinct, not from what you think you should say.</div>
+      </div>
+    </div>
+    <div class="card" style="cursor:default;margin-bottom:.75rem;padding:1.1rem 1.25rem;display:flex;gap:1rem;align-items:flex-start;">
+      <div style="width:2rem;height:2rem;border-radius:50%;background:var(--teal);color:#fff;font-family:var(--mono);font-size:.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+      <div>
+        <div class="card-tag" style="margin-bottom:.25rem">Assembly History</div>
+        <div style="font-weight:500;margin-bottom:.3rem;">Six questions about your life &mdash; be specific</div>
+        <div style="font-size:.84rem;color:var(--dim);line-height:1.6;">The depth of your answers here directly determines the precision of your profile. A few sentences per question produces a sketch. Several paragraphs produces something you will recognize. You can always return to deepen your answers later.</div>
+      </div>
+    </div>
+    <div class="card" style="cursor:default;margin-bottom:.75rem;padding:1.1rem 1.25rem;display:flex;gap:1rem;align-items:flex-start;">
+      <div style="width:2rem;height:2rem;border-radius:50%;background:var(--teal);color:#fff;font-family:var(--mono);font-size:.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+      <div>
+        <div class="card-tag" style="margin-bottom:.25rem">Read your profile</div>
+        <div style="font-weight:500;margin-bottom:.3rem;">Slowly. Notice what fits and what doesn&rsquo;t.</div>
+        <div style="font-size:.84rem;color:var(--dim);line-height:1.6;">The places where the profile misses you are as important as the places where it is right. Both are philosophical territory. The profile is a first approximation, not a final word. You will revise it over the course of the semester.</div>
+      </div>
+    </div>
+    <div class="card" style="cursor:default;margin-bottom:.75rem;padding:1.1rem 1.25rem;display:flex;gap:1rem;align-items:flex-start;">
+      <div style="width:2rem;height:2rem;border-radius:50%;background:var(--amber);color:#fff;font-family:var(--mono);font-size:.8rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</div>
+      <div>
+        <div class="card-tag" style="margin-bottom:.25rem">Write your Letter to Future Self</div>
+        <div style="font-weight:500;margin-bottom:.3rem;">200 words. You will not read it until week 14.</div>
+        <div style="font-size:.84rem;color:var(--dim);line-height:1.6;">In the Archive tab, find Letter to Future Self. Write to yourself as you are right now. What do you hope you don&rsquo;t forget? What are you trying to become? What should pull you back if you drift off track? Save it and do not read it again until the final week.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-header" style="margin-top:1.5rem">
+    <div class="sec-label">Tips for getting the most from it</div>
+    <div class="sec-title">How to use the Companion well</div>
+  </div>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">&#128161;</div>
+      <h4>Bring something real</h4>
+      <p>The Companion works best with actual situations from your life &mdash; not hypotheticals or abstract questions.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#128172;</div>
+      <h4>When stuck, say so</h4>
+      <p>Tell the Companion: &ldquo;I feel like we&rsquo;ve covered this &mdash; what am I not seeing yet?&rdquo; That question almost always opens a new direction.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#128190;</div>
+      <h4>Save what matters</h4>
+      <p>After an exchange where something clicked, save it. The archive is your most important instrument for the final project.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#128247;</div>
+      <h4>Deepen your answers</h4>
+      <p>Return to your Assembly History and add more detail when you notice the profile missing something important about you.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#128200;</div>
+      <h4>Check in at inflection points</h4>
+      <p>Use the coherence check-in when something changes &mdash; not on a fixed schedule. The pattern matters, not the frequency.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">&#9749;</div>
+      <h4>Recover before examining</h4>
+      <p>When you are depleted, Recovery Mode first. You cannot examine yourself honestly when you are running on empty.</p>
+    </div>
+  </div>
+
+  <div class="info-box" style="margin-top:1.25rem">
+    <strong>One question to start with if you don&rsquo;t know where to begin:</strong><br>
+    &ldquo;Given who I am right now, what is one thing I should understand about myself that I am not seeing clearly?&rdquo;
   </div>
 </div>
 
-<!-- CHAPTER 4 -->
-<div class="chapter-group ch-4">
-  <div class="group-label">Chapter 4 &mdash; Wangari Maathai</div>
-  <div class="app-grid">
-    <a class="app-card" href="maathai-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🌳</div><div><div class="app-card-title">Maathai Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Wangari Maathai and the Green Belt Movement. Coordination architecture, OS2 Bridge, and building institutions that outlast their founders.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter4-maathai-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🌿</div><div><div class="app-card-title">Chapter 4 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Institutional design, capability-based coordination, and the ethics of building structures that distribute agency.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
+</div><!-- /wrap -->
+
+<div class="app-footer">
+  Ethics Beyond Boundaries &middot; Saint Petersburg College &middot; Philosophy Lab Corporation &middot; 2026
 </div>
 
-<!-- CHAPTER 5 -->
-<div class="chapter-group ch-5">
-  <div class="group-label">Chapter 5 &mdash; Nelson Mandela</div>
-  <div class="app-grid">
-    <a class="app-card" href="mandela-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">⚖️</div><div><div class="app-card-title">Mandela Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Nelson Mandela and the TRC. Three simulation runs: the TRC design, the fragmentation counterfactual, and the vulnerable population test.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter5-mandela-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🕊️</div><div><div class="app-card-title">Chapter 5 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Truth, reconciliation, and institutional design across radical difference. The TRC as a coordination architecture problem.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+<script>
+function show(id){
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.ntb').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('pane-'+id).classList.add('active');
+  document.querySelectorAll('.ntb').forEach(function(b){
+    if(b.getAttribute('onclick').includes("'"+id+"'")) b.classList.add('active');
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-<!-- CHAPTER 6 -->
-<div class="chapter-group ch-6">
-  <div class="group-label">Chapter 6 &mdash; Tim Palmer</div>
-  <div class="app-grid">
-    <a class="app-card" href="palmer-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🌀</div><div><div class="app-card-title">Palmer Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Tim Palmer and ensemble forecasting. Single-model vs. ensemble architecture. The moral argument for honest uncertainty. Three simulation runs.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter6-companion.html">
-      <div class="app-card-head"><div class="app-card-icon">📊</div><div><div class="app-card-title">Chapter 6 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The primacy of doubt. Chaos, uncertainty, and the ethics of what forecasting institutions owe the people who depend on them.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
+function setMode(id,btn){
+  document.querySelectorAll('.mode-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.mtb').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('mode-'+id).classList.add('active');
+  btn.classList.add('active');
+}
 
-<!-- CHAPTER 7 -->
-<div class="chapter-group ch-7">
-  <div class="group-label">Chapter 7 &mdash; Doyne Farmer</div>
-  <div class="app-grid">
-    <a class="app-card" href="farmer-case-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">🏭</div><div><div class="app-card-title">Farmer Case Explorer</div><div class="app-card-type">Case Explorer + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Doyne Farmer and agent-based economics. Three runs: Representative Agent, Heterogeneous Agents, Rawlsian Test. The COVID prediction and what standard models missed.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Explorer</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="chapter7-farmer-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🔬</div><div><div class="app-card-title">Chapter 7 Companion</div><div class="app-card-type">Companion App</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The invisible people. Representative agent error, heterogeneous modeling, social block fields, and the Rawlsian test. Your field map exercise.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Companion</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 8 -->
-<div class="chapter-group ch-8">
-  <div class="group-label">Chapter 8 &mdash; The Simulated History of Ethics</div>
-  <div class="app-grid">
-    <a class="app-card" href="ethical-theories-app.html">
-      <div class="app-card-head"><div class="app-card-icon">🏛️</div><div><div class="app-card-title">Ethical Theories App</div><div class="app-card-type">Nine Stations + Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">What were the traditions actually measuring? Nine stations from Socrates to Existentialism. Conditions Cascade visualization. Composite Run with all nine conditions. The Complex PRF.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 9 -->
-<div class="chapter-group ch-9">
-  <div class="group-label">Chapter 9 &mdash; The World Values Map</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter9-wvm-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127758;</div><div><div class="app-card-title">Where Are You Standing?</div><div class="app-card-type">Cultural PRF &middot; Cross-Cultural Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The World Values Map applied to the simulation. Two axes, five worldview categories, the thermodynamic logic of why values shift with conditions, IPS-WVM connection, and AMC forward pointer.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- CHAPTER 10 -->
-<div class="chapter-group ch-10">
-  <div class="group-label">Chapter 10 &mdash; The Social Contract</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter10-social-contract-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#x2696;&#xFE0F;</div><div><div class="app-card-title">Who Gave Them the Right?</div><div class="app-card-type">Three Architectures &middot; IPS Profiles &middot; Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Hobbes, Locke, and Rousseau as institutional architectures mapped to IPS parameters. Characteristic failure mode per architecture. CPG five criteria as IPS requirements. The Hybrid Citizen framework.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- INTERLUDE -->
-<div class="chapter-group ch-interlude">
-  <div class="group-label">Interlude &mdash; Ethics of the Framework</div>
-  <div class="app-grid">
-    <a class="app-card" href="interlude-ethics-framework-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#9651;</div><div><div class="app-card-title">Ethics of the Framework</div><div class="app-card-type">Agency Conditions Principle &middot; Bridge Reading</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The normative core stated in full: ACP, entropy-exporting institutions, Coherence-Preserving Governance, temporal commons, and the six-question diagnostic for the applied sequence ahead.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Reading</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- RUST BELT -->
-<div class="chapter-group ch-rustbelt">
-  <div class="group-label">Rust Belt Case Study &mdash; Nine Lenses Applied</div>
-  <div class="app-grid">
-    <a class="app-card" href="rust-belt-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127981;</div><div><div class="app-card-title">Rust Belt &mdash; Nine Ethical Lenses</div><div class="app-card-type">Case Study + Three-Part Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The Rust Belt collapse examined through all nine ethical traditions simultaneously. Pre-collapse, collapse, and current state metrics. The synthesis tab shows what no single lens can see alone.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Study</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- APPLIED SEQUENCE -->
-<div class="chapter-group ch-prologue">
-  <div class="group-label">Prologue &mdash; The Pattern Beneath Ethics</div>
-  <div class="app-grid">
-    <a class="app-card" href="prologue-pattern-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127381;</div><div><div class="app-card-title">The Pattern Beneath Ethics</div><div class="app-card-type">Scale-Free Laws &middot; Agential Hijacking &middot; Course Map</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The scale-invariant mechanism underlying every chapter: parasitic overwrite operating identically at biological, psychological, institutional, and civilizational scales. The mantis case. Course architecture revealed.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-companion">Prologue</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="chapter-group ch-11">
-  <div class="group-label">Chapter 11 &mdash; Economic Systems (Applied Sequence &middot; Movement 1)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter11-economic-systems-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127970;</div><div><div class="app-card-title">What the Economy Does to Coherent Agency</div><div class="app-card-type">IPS Diagnostic &middot; BioBond &middot; Peterson et al. 2025</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The False Choice thesis. Nine fairness dimensions as IPS parameters. Florida nursing home ownership archetypes (Peterson/AARP 2025 &amp; CMS data). PE acquisition trajectory 2019&ndash;2024. BioBond instruments. True Solvency Accounting. Three economic architecture simulation configs.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation + IPS</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="chapter-group ch-12">
-  <div class="group-label">Chapter 12 &mdash; Governance Systems (Applied Sequence &middot; Movement 2)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter12-governance-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127981;</div><div><div class="app-card-title">Governance Systems and the Routing Quality Gap</div><div class="app-card-type">Four Configs &middot; Boisjoly T4 &middot; Type 1/Type 2 Failure</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Procedural vs. substantive legitimacy. Config A (Captured), B (Coherence-Preserving), C (Reform Transition), D (Boisjoly T4: agent FHRI 82, absorbed 67.7 pts). Type 1 vs. Type 2 routing quality failure distinction.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="chapter-group ch-13">
-  <div class="group-label">Chapter 13 &mdash; Information Systems (Applied Sequence &middot; Movement 3)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter13-infosystems-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#128225;</div><div><div class="app-card-title">Information Systems and the Second Filter</div><div class="app-card-type">Web of Acquisition &middot; &sigma;/&mu; Filter Asymmetry &middot; AI Ethics</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The filter upstream of governance. CSER Cambridge web of acquisition framework. IPS mechanism of filter asymmetry: &sigma; (morphic residue) and &mu; (incentive misalignment). Why 80% structural improvement is the honest result. Three simulation configs with IPS profiles.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Simulation</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="chapter-group ch-14">
-  <div class="group-label">Chapter 14 &mdash; Existential Risk (Applied Sequence &middot; Movement 4)</div>
-  <div class="app-grid">
-    <a class="app-card" href="chapter14-existential-risk-app.html">
-      <div class="app-card-head"><div class="app-card-icon">&#127759;</div><div><div class="app-card-title">Existential Risk, Leverage, and the AMC</div><div class="app-card-type">IPS Field Profiles &middot; Iron Cage &middot; T1/T2 Counterfactuals</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Meadows leverage hierarchy. Iron Cage (high-&sigma;/&rho;) and Obsolescence Trap (high-&epsilon;/&mu;) failure modes. Four-institution IPS field profiles. Trust vector trajectory. T1 vs. T2 intervention types. Paris Agreement analysis. AMC as field architecture.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Multi-Institutional Field</span><span class="app-card-arrow">&#8594;</span></div>
-    </a>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- REFERENCE TOOLS -->
-<div class="chapter-group ch-tools">
-  <div class="group-label">Reference Tools &amp; Labs</div>
-  <div class="app-grid">
-    <a class="app-card" href="ucp-metrics-reference.html">
-      <div class="app-card-head"><div class="app-card-icon">📐</div><div><div class="app-card-title">UCP Metrics Reference</div><div class="app-card-type">Technical Reference</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Complete technical documentation for every simulation metric: formulas, ranges, research grounding, and parameter interactions.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Reference</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="ucp-student-guide.html">
-      <div class="app-card-head"><div class="app-card-icon">📖</div><div><div class="app-card-title">Student Guide</div><div class="app-card-type">How to Use the Simulation</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Plain-language guide to running simulations, reading metrics, and connecting results to the course concepts.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Guide</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="metrics-calibration-lab.html">
-      <div class="app-card-head"><div class="app-card-icon">🧪</div><div><div class="app-card-title">Metrics Calibration Lab</div><div class="app-card-type">Interactive Lab</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Hands-on parameter exploration. Adjust worldview distributions and evidence architectures and watch metrics respond in real time.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-simulation">Lab</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="worldview-comparison.html">
-      <div class="app-card-head"><div class="app-card-icon">🌐</div><div><div class="app-card-title">Worldview Comparison</div><div class="app-card-type">Reference Tool</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Side-by-side comparison of the five worldview frameworks. What each sees, what each misses, and how they interact in the simulation.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Reference</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="trans-temporal-explorer.html">
-      <div class="app-card-head"><div class="app-card-icon">⏳</div><div><div class="app-card-title">Trans-Temporal Explorer</div><div class="app-card-type">Research Tool</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">Generational transmission of coordination capacity. How institutional patterns propagate across time and what degrades or improves them.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-reference">Research</span><span class="app-card-arrow">→</span></div>
-    </a>
-    <a class="app-card" href="cte-challenge.html">
-      <div class="app-card-head"><div class="app-card-icon">🏈</div><div><div class="app-card-title">CTE Challenge</div><div class="app-card-type">Case Study</div></div></div>
-      <div class="app-card-body"><div class="app-card-desc">The NFL's CTE crisis as a coordination failure case. Capability-based coordination in practice.</div></div>
-      <div class="app-card-footer"><span class="app-card-tag tag-case">Case Study</span><span class="app-card-arrow">→</span></div>
-    </a>
-  </div>
-</div>
-
-<div style="text-align:center;padding:2rem 0 1rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.2)">
-  Ethics Beyond Boundaries &middot; Saint Petersburg College &middot; Ethics Institute &middot; &copy; 2026
-</div>
-
-</div>
+function toggleAssign(header){
+  var body=header.nextElementSibling;
+  body.classList.toggle('open');
+}
+</script>
 </body>
 </html>
